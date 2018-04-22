@@ -1,0 +1,208 @@
+/**
+ * Creates the node of a binary tree which holds an object
+ * and links to two other nodes --left and right
+ * 
+ * @author Logan Stapleton
+ * August 8, 2015
+ *
+ * @param <E>
+ * Generic object
+ */
+public class BTNode<E> implements Cloneable{//start BTNode
+
+    /**
+     * Invariant of the BTNode<E> class:
+     * 1. data contains an object, not of primitive type
+     * 2. left and right are references to nodes of the same object type
+     */
+                        //Instance Fields    
+    private E data;
+    private BTNode<E> left;
+    private BTNode<E> right;
+    
+    
+                        //Constructors
+    
+    /**
+     * Passes in parameters and creates a node with data and links left and right
+     * 
+     * @param e
+     * Object to be held by the node
+     * @param l
+     * Left link node
+     * @param r
+     * Right link node
+     */
+    public BTNode(E e, BTNode<E> l, BTNode<E> r){//start constructor
+        data = e;
+        left = l;
+        right = r;
+    }//end constructor
+    
+    /**
+     * Overloaded constructor that passes only the data parameter, no links
+     * 
+     * @param e
+     * Object to be held by the node
+     */
+    public BTNode(E e){//start constructor w/o links
+        data = e;
+        left = null;
+        right = null;
+    }//end constructor w/o links
+    
+    
+                        //Getters and Setters
+    /**
+     * Passes in node and sets it as left link to this node
+     * @param l
+     * Left link node
+     */
+    public void setLeft(BTNode<E> l){//start setLeft(BTNode)
+        left = l;
+    }//end setLeft(BTNode)
+    
+    /**
+     * Passes in an object and creates a node to set as left link
+     * @param e
+     * Data for left link node
+     */
+    public void setLeft(E e){//start setLeft(E)
+        left = new BTNode<E>(e, null, null);
+    }//end setLeft(E)
+    
+    /**
+     * Gets the node that this node links to on left
+     * @return left
+     * Left link
+     */
+    public BTNode<E> getLeft(){//start getLeft()
+        return left;
+    }//end getLeft()
+    
+    /**
+     * Passes in node to link on right
+     * @param r
+     * Right link
+     */
+    public void setRight(BTNode<E> r){//start setRight(BTNode)
+        right = r;
+    }//end setRight(BTNode)
+    
+    /**
+     * Passes in element, creates a node for right link
+     * @param e
+     * Data for new right link
+     */
+    public void setRight(E e){//start setRight(E)
+        right = new BTNode<E>(e, null, null);
+    }//end setRight(E)
+    
+    /**
+     * Gets the node for the right link
+     * @return right
+     * Right link
+     */
+    public BTNode<E> getRight(){//start getRight()
+        return right;
+    }//end getRight()
+    
+    /**
+     * Passes in object and sets as data held by node
+     * @param e
+     * Data to hold
+     */
+    public void setData(E e){//start setData()
+        data = e;
+    }//end setData()
+    
+    /**
+     * Gets data held by node
+     * @return data
+     * Object held by node
+     */
+    public E getData(){//start getData()
+        return data;
+    }//end getData()
+    
+    
+                            //Extra Methods
+    /**
+     * Checks if node is a leaf
+     * @return
+     * True if node has no children
+     * False if node has at least one child
+     */
+    public boolean isLeaf(){//start isLeaf()
+        if(this.getLeft() == null && this.getRight() == null)
+            return true;
+        
+        return false;
+    }//end isLeaf()
+    
+    /**
+     * Creates a deep copy of this node
+     * @return
+     * Clone of node
+     */
+    public BTNode<E> clone(){//start clone()
+        return new BTNode<E>(this.getData(), this.getLeft(), this.getRight());
+    }//end clone()
+    
+    /**
+     * Creates a string of the data in node and both the links
+     */
+    public String toString(){//start toString()
+        return "Data: " + data.toString() + "Left Link: " + left.toString() + "Right Link: " + right.toString();
+    }//end toString()
+    
+    /**
+     * Gets the first node that is greater than this node
+     * @return node
+     * In order successor to this node
+     */
+    public BTNode<E> getInOrderSuccessor(){//start getInOrderSuccessor()
+        BTNode<E> node = this;
+        
+        if(node.getRight() == null)
+            return node;
+        
+        else{//start else
+            node = node.getRight();
+            while(node.getLeft() != null)
+                node = node.getLeft();
+        }//end else
+        
+        return node;
+        
+    }//end getInOrderSuccessor()
+    
+    //Copied from the textbook
+    /**
+     * Traverses tree in order and prints its contents
+     */
+    public void inOrderPrint(){//start inOrderPrint
+        if(left != null)
+            left.inOrderPrint();
+        
+        System.out.println(data);
+        
+        if(right != null)
+            right.inOrderPrint();
+    }//end inOrderPrint
+    
+    /**
+     * Checks if this node is empty
+     * @return
+     * True if data == null
+     * False if not
+     */
+    public boolean isEmpty(){//start isEmpty()
+        if(data == null)
+            return true;
+        
+        return false;
+    }//end isEmpty()
+    
+    
+}//end BTNode
